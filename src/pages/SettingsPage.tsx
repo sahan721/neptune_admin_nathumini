@@ -1,8 +1,8 @@
-import { KeyRound, Save, ShieldCheck, UserRound } from 'lucide-react';
+import { Save, ShieldCheck, UserRound } from 'lucide-react';
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { FormField } from '../components/FormField';
-import { PrimaryButton, SecondaryButton } from '../components/buttons';
+import { PrimaryButton } from '../components/buttons';
 import { ToggleSwitch } from '../components/ToggleSwitch';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -15,17 +15,10 @@ export function SettingsPage() {
   const [email, setEmail] = useState(admin?.email ?? '');
   const [mobile, setMobile] = useState(admin?.mobile ?? '');
 
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
   const [notifRequests, setNotifRequests] = useState(true);
   const [notifAssignments, setNotifAssignments] = useState(true);
-  const [notifSystem, setNotifSystem] = useState(false);
 
   const [savingProfile, setSavingProfile] = useState(false);
-  const [savingPassword, setSavingPassword] = useState(false);
 
   const handleSaveProfile = (e: FormEvent) => {
     e.preventDefault();
@@ -36,37 +29,12 @@ export function SettingsPage() {
     }, 700);
   };
 
-  const handleSavePassword = (e: FormEvent) => {
-    e.preventDefault();
-    if (!currentPassword) {
-      setPasswordError('Enter your current password');
-      return;
-    }
-    if (newPassword.length < 6) {
-      setPasswordError('New password must be at least 6 characters');
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setPasswordError('New password and confirmation do not match');
-      return;
-    }
-    setPasswordError('');
-    setSavingPassword(true);
-    window.setTimeout(() => {
-      setSavingPassword(false);
-      setCurrentPassword('');
-      setNewPassword('');
-      setConfirmPassword('');
-      toast.success('Password updated');
-    }, 700);
-  };
-
   return (
     <div className="fade-in">
       <div className="page-head">
         <div>
           <h2>Settings</h2>
-          <p>Admin profile, security and notification preferences.</p>
+          <p>Admin profile and notification preferences.</p>
         </div>
       </div>
 
@@ -121,50 +89,6 @@ export function SettingsPage() {
         <div className="card">
           <div className="card-head">
             <h3 className="card-title">
-              <KeyRound /> Change Password
-            </h3>
-          </div>
-          <form className="card-body" onSubmit={handleSavePassword}>
-            <div className="form-grid">
-              <FormField label="Current Password" required className="span-2" error={passwordError}>
-                <input
-                  className="input"
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  placeholder="Enter current password"
-                />
-              </FormField>
-              <FormField label="New Password" required>
-                <input
-                  className="input"
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Min. 6 characters"
-                />
-              </FormField>
-              <FormField label="Confirm New Password" required>
-                <input
-                  className="input"
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Repeat the new password"
-                />
-              </FormField>
-            </div>
-            <div style={{ marginTop: 18, display: 'flex', justifyContent: 'flex-end' }}>
-              <PrimaryButton type="submit" loading={savingPassword}>
-                <KeyRound size={15} /> Update Password
-              </PrimaryButton>
-            </div>
-          </form>
-        </div>
-
-        <div className="card">
-          <div className="card-head">
-            <h3 className="card-title">
               <ShieldCheck /> Notifications
             </h3>
           </div>
@@ -192,28 +116,6 @@ export function SettingsPage() {
                 onChange={setNotifAssignments}
                 label="Assignment reminders"
               />
-            </div>
-            <div className="setting-row">
-              <span>
-                <span className="sr-title">System updates</span>
-                <div className="sr-desc">
-                  Maintenance notices and platform updates from NEPTUNE.
-                </div>
-              </span>
-              <ToggleSwitch checked={notifSystem} onChange={setNotifSystem} label="System updates" />
-            </div>
-            <div className="setting-row" style={{ borderBottom: 'none', paddingBottom: 14 }}>
-              <span>
-                <span className="sr-title">Audit trail</span>
-                <div className="sr-desc">
-                  All admin actions are recorded. The full audit history is read-only.
-                </div>
-              </span>
-              <SecondaryButton
-                onClick={() => toast.info('Full audit history is available in the backend API')}
-              >
-                View audit trail
-              </SecondaryButton>
             </div>
           </div>
         </div>

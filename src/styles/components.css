@@ -319,7 +319,7 @@
 
 .input::placeholder,
 .textarea::placeholder {
-  color: var(--np-ink-3);
+  color: var(--np-placeholder);
 }
 
 .input:focus,
@@ -423,7 +423,7 @@
   place-items: center;
   border: none;
   background: none;
-  color: var(--np-ink-3);
+  color: var(--np-ink-2);
   cursor: pointer;
   border-radius: 2px;
 }

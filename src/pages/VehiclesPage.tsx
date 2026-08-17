@@ -29,7 +29,6 @@ const STATUS_OPTIONS = [
 
 const TYPE_OPTIONS = [
   { value: 'ALL', label: 'All Types' },
-  { value: 'TRUCK', label: 'Truck (Waste Truck)' },
   { value: 'TUK', label: 'Tuk (Three-Wheeler)' },
   { value: 'BIKE', label: 'Bike (Motorcycle)' },
 ];

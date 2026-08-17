@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, LogOut, Menu, Settings, UserRound } from 'lucide-react';
+import { Bell, ChevronDown, LogOut, Menu, Settings } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Avatar } from '../components/Avatar';
@@ -134,17 +134,6 @@ export function Header({ onToggleSidebar }: HeaderProps) {
                 <div className="pm-role">{admin?.role ?? 'ADMIN'}</div>
                 <div className="pm-user-id mono">ID: {admin?.loginId ?? 'ADMIN01'}</div>
               </div>
-              <button
-                type="button"
-                className="dropdown-item"
-                onClick={() => {
-                  setProfileOpen(false);
-                  navigate('/settings');
-                }}
-              >
-                <UserRound size={15} />
-                Admin Profile
-              </button>
               <button
                 type="button"
                 className="dropdown-item"

@@ -87,7 +87,8 @@ export function CollectorFormModal({
     if (!isEdit && !form.password) next.password = 'Password is required';
     else if (!isEdit && form.password.length < 4) next.password = 'Password must be 4+ characters';
     if (!form.nic.trim()) next.nic = 'NIC is required';
-    else if (!/^\d{9}[VXvx]$/.test(form.nic.trim())) next.nic = 'NIC must be 9 digits + V or X';
+    else if (!/^(?:\d{9}[VXvx]|\d{12})$/.test(form.nic.trim()))
+      next.nic = 'NIC must be 9 digits + V or X, or 12 digits';
     if (!form.mobile.trim()) next.mobile = 'Mobile is required';
     else if (!isValidMobile(form.mobile)) next.mobile = 'Enter a valid 10-digit mobile';
     if (!form.address.trim()) next.address = 'Address is required';
@@ -167,7 +168,7 @@ export function CollectorFormModal({
             className="input"
             value={form.nic}
             onChange={(e) => set('nic', e.target.value.toUpperCase())}
-            placeholder="e.g. 921234567V"
+            placeholder="e.g. 921234567V or 199212345678"
           />
         </FormField>
         <FormField label="Mobile" required error={errors.mobile}>
